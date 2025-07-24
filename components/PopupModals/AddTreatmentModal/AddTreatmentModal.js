@@ -206,3 +206,5 @@ export default function AddTreatmentModal({ onClose, obsId }) {
     </div>
   );
 }
+
+//This is where the add treatment gets modified
