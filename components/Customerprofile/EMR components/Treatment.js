@@ -1,3 +1,4 @@
+// components\Customerprofile\EMR components\Treatment.js
 "use client";
 import React, { useState } from "react";
 import "./Treatment.css";
