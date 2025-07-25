@@ -29,6 +29,7 @@ const EMR = ({
   handleBookClick,
   patient_details,
   onUpdatePatient,
+  switchToTreatmentTab,
 }) => {
   const [activeTab1, setActiveTab1] = useState("examination");
 
@@ -90,6 +91,7 @@ const EMR = ({
               onUpdatePatient={onUpdatePatient}
               appo_id={patient_details?.appo_id}
               branch={patient_details?.branch?.toString() || "1"}
+              switchToTreatmentTab={() => setActiveTab1("treatment")}
             />
           )}
 

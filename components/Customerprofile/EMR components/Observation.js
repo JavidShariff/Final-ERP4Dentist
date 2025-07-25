@@ -6,7 +6,7 @@ import "./Observation.css";
 import ObservationModal from "@/components/PopupModals/ObservationModal/ObservationModal";
 import AddTreatmentModal from "@/components/PopupModals/AddTreatmentModal/AddTreatmentModal";
 
-const Observation = ({ data = [], onUpdatePatient, appo_id, branch }) => {
+const Observation = ({ data = [], onUpdatePatient, appo_id, branch, switchToTreatmentTab }) => {
   const [show, setShow] = useState(false); // For ObservationModal
   const [showModal, setShowModal] = useState(false); // For AddTreatmentModal
   const [selectedObsId, setSelectedObsId] = useState(null); // Track clicked observation row
@@ -16,15 +16,21 @@ const Observation = ({ data = [], onUpdatePatient, appo_id, branch }) => {
     setShowModal(true);
   };
 
-  const handleClose = () => {
+  const handleClose = (didSubmit = false) => {
     setShowModal(false);
     setSelectedObsId(null);
+    if (didSubmit && typeof onUpdatePatient === "function") {
+      onUpdatePatient();
+      setTimeout(() => {
+        document.querySelector(".treatment-container")?.scrollIntoView({ behavior: "smooth" });
+      }, 300);
+    }
   };
 
   const handleModalClose = () => {
     setShow(false);
     if (typeof onUpdatePatient === "function") {
-      onUpdatePatient(); // Refresh data after POST
+      onUpdatePatient(); // Refresh data after Observation POST
     }
   };
 
@@ -113,7 +119,13 @@ const Observation = ({ data = [], onUpdatePatient, appo_id, branch }) => {
                   <FaPen style={{ marginRight: "6px" }} /> Add Treatment
                 </button>
                 {showModal && selectedObsId === obs.id && (
-                  <AddTreatmentModal onClose={handleClose} obsId={selectedObsId} />
+                  <AddTreatmentModal
+                    onClose={handleClose}
+                    obsId={selectedObsId}
+                    appo_id={appo_id}
+                    branch={branch}
+                    switchToTreatmentTab={switchToTreatmentTab}
+                  />
                 )}
               </td>
               <td>
